@@ -6,6 +6,9 @@ buildscript {
     }
 
     dependencies {
+        implementation 'com.google.firebase:firebase-core:9.6.1'
+        implementation 'com.google.firebase:firebase-database-connection:16.0.2'
+        classpath 'com.google.gms:google-services:4.3.10'
         classpath 'com.android.tools.build:gradle:4.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }

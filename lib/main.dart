@@ -1,4 +1,5 @@
 import 'package:english_words/english_words.dart';
+import 'package:firebase_database/firebase_database.dart';
 import "package:flutter/material.dart";
 
 
@@ -29,6 +30,7 @@ class RandomWords extends StatefulWidget{
   _RandomWordsState createState() => _RandomWordsState();
 }
 class _RandomWordsState extends State<RandomWords>{
+  final databaseReference = FirebaseDatabase.instance.reference();
   final _saved = <WordPair>{};
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18);
@@ -42,7 +44,7 @@ class _RandomWordsState extends State<RandomWords>{
         title: const Text("Startup Name Generator"),
         actions: [
           IconButton(
-              onPressed: _pushSaved,
+              onPressed:_pushSaved,
               icon: const Icon(Icons.list),
             tooltip: "Saved Suggestions",
           )
@@ -94,8 +96,10 @@ class _RandomWordsState extends State<RandomWords>{
       onTap: (){
         setState(() {
           if(alreadySaved){
+            deleteRecord(pair.asPascalCase);
             _saved.remove(pair);
           }else{
+            createRecord(pair.asPascalCase);
             _saved.add(pair);
           }
         });
@@ -133,6 +137,14 @@ class _RandomWordsState extends State<RandomWords>{
           },
       )
     );
+  }
+  void createRecord(pair){
+    databaseReference.child(pair).set({
+      'liked':1
+    });
+  }
+  void deleteRecord(pair){
+    databaseReference.child(pair).remove();
   }
 }
 

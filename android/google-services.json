@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "418566165787",
+    "project_id": "startup-namer-b027b",
+    "storage_bucket": "startup-namer-b027b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418566165787:android:261fc5fec6498d67866fbe",
+        "android_client_info": {
+          "package_name": "startup.namer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418566165787-gsuqr2bj0eoao9pcfjoa927pacqgf2vf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "startup.namer",
+            "certificate_hash": "709bfcb3f7b5e0ba6742c30c9d2ee334072598d5"
+          }
+        },
+        {
+          "client_id": "418566165787-3i5ojoo9og4vecrsvtqa368u3ihqreic.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-0Kke74tKoc7-1btQR83bBUXfbgcSvG0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418566165787-3i5ojoo9og4vecrsvtqa368u3ihqreic.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

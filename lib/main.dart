@@ -14,6 +14,12 @@ class MyApp extends StatelessWidget{
 
     return MaterialApp(
       title: "Welcome to flutter",
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+            backgroundColor: Colors.yellow,
+            foregroundColor: Colors.black
+        )
+      ),
       home: RandomWords()
     );
   }
@@ -23,6 +29,7 @@ class RandomWords extends StatefulWidget{
   _RandomWordsState createState() => _RandomWordsState();
 }
 class _RandomWordsState extends State<RandomWords>{
+  final _saved = <WordPair>{};
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18);
 
@@ -33,11 +40,19 @@ class _RandomWordsState extends State<RandomWords>{
     return Scaffold(
       appBar: AppBar(
         title: const Text("Startup Name Generator"),
+        actions: [
+          IconButton(
+              onPressed: _pushSaved,
+              icon: const Icon(Icons.list),
+            tooltip: "Saved Suggestions",
+          )
+        ],
       ),
       body: _buildSuggestion(),
     );
   }
   Widget _buildSuggestion(){
+
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemBuilder: (context, i){
@@ -62,11 +77,61 @@ class _RandomWordsState extends State<RandomWords>{
     );
   }
   Widget _buildRow(WordPair pair){
+    // check to ensure that a word pairing has not already
+    // been added to favorites
+    final alreadySaved = _saved.contains(pair);
+
     return ListTile(
       title: Text(
         pair.asPascalCase,
         style: _biggerFont,
       ),
+      trailing: Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+        semanticLabel: alreadySaved? 'Removed from saved': 'Save',
+      ),
+      onTap: (){
+        setState(() {
+          if(alreadySaved){
+            _saved.remove(pair);
+          }else{
+            _saved.add(pair);
+          }
+        });
+      }
+    );
+  }
+
+  void _pushSaved(){
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+          builder: (context){
+            final tiles = _saved.map(
+                (pair){
+                  return ListTile(
+                    title: Text(
+                      pair.asPascalCase,
+                      style: _biggerFont
+                    ),
+                  );
+                },
+            );
+            final divided = tiles.isNotEmpty
+              ? ListTile.divideTiles(
+                context: context,
+                tiles: tiles,
+              ).toList()
+                : <Widget>[];
+
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text("Saved Suggestions"),
+              ),
+              body: ListView(children:divided),
+            );
+          },
+      )
     );
   }
 }
